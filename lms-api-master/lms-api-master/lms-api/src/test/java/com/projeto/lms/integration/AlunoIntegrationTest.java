@@ -41,17 +41,17 @@ class AlunoIntegrationTest {
         // 1. Cenário: Criamos um aluno com CPF e Senha (em vez de email)
         Aluno novoAluno = new Aluno();
         novoAluno.setNome("Teste Integração");
-        novoAluno.setCpf("12345678900");     // <--- CORRIGIDO
-        novoAluno.setSenha("minhasenha123"); // <--- CORRIGIDO
-        novoAluno.setRoles("ROLE_ALUNO");    // <--- CORRIGIDO
+        novoAluno.setCpf("12345678900");     
+        novoAluno.setSenha("minhasenha123"); 
+        novoAluno.setRoles("ROLE_ALUNO");    
 
-        // 2. Ação
+        
         mockMvc.perform(post("/api/alunos")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(novoAluno)))
-                .andExpect(status().isCreated()); // Se der erro 404/200 aqui, me avise que ajustamos
+                .andExpect(status().isCreated()); 
 
-        // 3. Validação no Banco
+        
         assert(alunoRepository.count() == 1);
         Aluno salvo = alunoRepository.findAll().get(0);
         assert(salvo.getCpf().equals("12345678900"));
@@ -59,16 +59,16 @@ class AlunoIntegrationTest {
 
     @Test
     void deveLerDoBancoViaApi() throws Exception {
-        // 1. Cenário: Salvando direto no banco
+      
         Aluno aluno = new Aluno();
         aluno.setNome("Aluno Já Salvo");
-        aluno.setCpf("98765432100");         // <--- CORRIGIDO
-        aluno.setSenha("senhaforte");        // <--- CORRIGIDO
-        aluno.setRoles("ROLE_ALUNO");        // <--- CORRIGIDO
+        aluno.setCpf("98765432100");         
+        aluno.setSenha("senhaforte");       
+        aluno.setRoles("ROLE_ALUNO");       
 
         alunoRepository.save(aluno);
 
-        // 2. Ação
+        
         mockMvc.perform(get("/api/alunos"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(1))
