@@ -24,7 +24,6 @@ public class Professor {
     @Column(nullable = false)
     private String roles;
 
-    // ======= CONSTRUTORES =======
 
     public Professor() {}
 
@@ -36,7 +35,6 @@ public class Professor {
         this.roles = roles;
     }
 
-    // ======= GETTERS E SETTERS =======
 
     public Long getId() {
         return id;
