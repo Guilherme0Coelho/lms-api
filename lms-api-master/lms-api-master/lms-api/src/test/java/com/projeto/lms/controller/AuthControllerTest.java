@@ -21,7 +21,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 
-// addFilters = false desliga a segurança geral pra focar só no teste do método
 @WebMvcTest(controllers = AuthController.class, properties = "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration")
 class AuthControllerTest {
 
@@ -36,8 +35,7 @@ class AuthControllerTest {
 
     @Test
     void deveAutenticarUsuarioComSucesso() throws Exception {
-        // 1. Cenario (Arrange)
-        // Crie o objeto de login (ajuste conforme seu DTO real, se for construtor ou setters)
+        
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("admin");
         loginRequest.setPassword("123456");
@@ -46,14 +44,14 @@ class AuthControllerTest {
         Authentication authMock = mock(Authentication.class);
         UserDetails userDetailsMock = mock(UserDetails.class);
 
-        // Ensinamos os mocks a responderem
+        
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenReturn(authMock);
         when(authMock.getPrincipal()).thenReturn(userDetailsMock);
         when(userDetailsMock.getUsername()).thenReturn("admin");
         when(userDetailsMock.getAuthorities()).thenReturn(null); // Pode retornar lista vazia ou null pro teste simples
 
-        // 2. Ação e 3. Verificação
+        
         mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginRequest)))
@@ -63,7 +61,7 @@ class AuthControllerTest {
 
     @Test
     void deveRetornar401QuandoCredenciaisInvalidas() throws Exception {
-        // 1. Cenario
+        
         LoginRequest loginRequest = new LoginRequest();
         loginRequest.setUsername("errado");
         loginRequest.setPassword("errado");
@@ -72,7 +70,7 @@ class AuthControllerTest {
         when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class)))
                 .thenThrow(new BadCredentialsException("Bad credentials"));
 
-        // 2. Ação e 3. Verificação
+        // Verificação
         mockMvc.perform(post("/auth/login")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(loginRequest)))
