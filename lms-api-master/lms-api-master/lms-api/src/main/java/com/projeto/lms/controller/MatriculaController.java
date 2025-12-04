@@ -15,8 +15,7 @@ public class MatriculaController {
     @Autowired
     private MatriculaService matriculaService;
 
-    // Operação Adicional 2: Processo Composto/Transacional
-    // Exemplo de URL: POST /api/matriculas?alunoId=1&cursoId=101
+    
     @PostMapping("/realizar")
     public ResponseEntity<?> realizarMatricula(
             @RequestParam Long alunoId,
@@ -30,8 +29,7 @@ public class MatriculaController {
         }
     }
 
-    // Operação Adicional 3: Consulta com Múltiplos Critérios
-    // Exemplo de URL: GET /api/matriculas/pendentes?cursoId=101
+    
     @GetMapping("/pendentes")
     public ResponseEntity<List<Matricula>> getMatriculasPendentes(
             @RequestParam Long cursoId) {
@@ -39,5 +37,5 @@ public class MatriculaController {
         return ResponseEntity.ok(pendentes);
     }
 
-    // ... Adicione aqui o CRUD básico para Matricula se necessário.
+    
 }
