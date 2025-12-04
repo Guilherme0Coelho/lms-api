@@ -20,13 +20,12 @@ public class Aluno {
     private String nome;
 
     @Column(unique = true, nullable = false)
-    private String cpf; // Usado como username
+    private String cpf; 
+    @Column(nullable = false)
+    private String senha; 
 
     @Column(nullable = false)
-    private String senha; // <-- NOVO CAMPO: Senha Criptografada
-
-    @Column(nullable = false)
-    private String roles; // <-- NOVO CAMPO: Ex: "ROLE_ALUNO"
+    private String roles; 
 
     // Getters e Setters (Mantidos/Adicionados)
     public Long getId() {
@@ -53,19 +52,19 @@ public class Aluno {
         this.cpf = cpf;
     }
 
-    public String getSenha() { // <-- NOVO GETTER
+    public String getSenha() { 
         return senha;
     }
 
-    public void setSenha(String senha) { // <-- NOVO SETTER
+    public void setSenha(String senha) {
         this.senha = senha;
     }
 
-    public String getRoles() { // <-- NOVO GETTER
+    public String getRoles() { 
         return roles;
     }
 
-    public void setRoles(String roles) { // <-- NOVO SETTER
+    public void setRoles(String roles) { 
         this.roles = roles;
     }
 }
