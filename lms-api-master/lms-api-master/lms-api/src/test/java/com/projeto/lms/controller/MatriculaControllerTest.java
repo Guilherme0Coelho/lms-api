@@ -30,34 +30,34 @@ class MatriculaControllerTest {
 
     @Test
     void deveRealizarMatriculaComSucesso() throws Exception {
-        // 1. Cenário
+        
         Long alunoId = 1L;
         Long cursoId = 101L;
 
-        // CORREÇÃO: Usando o construtor manual que você definiu na classe MatriculaId
+        
         MatriculaId idComposto = new MatriculaId(alunoId, cursoId);
 
-        // CORREÇÃO: Usando o construtor vazio (@NoArgsConstructor) e setando o ID manualmente
+       
         Matricula matriculaMock = new Matricula();
         matriculaMock.setId(idComposto);
 
-        // Simulamos o retorno do service
+        
         when(matriculaService.realizarMatricula(alunoId, cursoId)).thenReturn(matriculaMock);
 
-        // 2. Ação e 3. Verificação
+       
         mockMvc.perform(post("/api/matriculas/realizar")
                         .param("alunoId", String.valueOf(alunoId))
                         .param("cursoId", String.valueOf(cursoId))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-        // Não validamos o corpo JSON detalhado aqui para evitar erros de serialização recursiva (Aluno/Curso)
+        
     }
 
     @Test
     void deveRetornarBadRequestQuandoHouverErroNaMatricula() throws Exception {
         String mensagemErro = "Aluno já possui matrícula neste curso";
 
-        // Forçamos o erro no service
+       
         when(matriculaService.realizarMatricula(anyLong(), anyLong()))
                 .thenThrow(new RuntimeException(mensagemErro));
 
@@ -72,10 +72,10 @@ class MatriculaControllerTest {
     void deveBuscarMatriculasPendentes() throws Exception {
         Long cursoId = 101L;
 
-        // Criando ID mockado
+        //  ID mockado
         MatriculaId idComposto = new MatriculaId(1L, cursoId);
 
-        // Criando matrícula mockada
+        //  matrícula mockada
         Matricula mat1 = new Matricula();
         mat1.setId(idComposto);
 
