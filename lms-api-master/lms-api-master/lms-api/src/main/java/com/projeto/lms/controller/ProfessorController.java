@@ -14,20 +14,20 @@ public class ProfessorController {
     @Autowired
     private ProfessorService professorService;
 
-    // POST: Cria um novo professor
+    
     @PostMapping
     public ResponseEntity<Professor> createProfessor(@RequestBody Professor professor) {
         Professor savedProfessor = professorService.save(professor);
         return ResponseEntity.ok(savedProfessor);
     }
 
-    // GET: Retorna todos os professores
+    
     @GetMapping
     public List<Professor> getAllProfessores() {
         return professorService.findAll();
     }
 
-    // GET: Retorna um professor por ID
+    
     @GetMapping("/{id}")
     public ResponseEntity<Professor> getProfessorById(@PathVariable Long id) {
         return professorService.findById(id)
@@ -35,7 +35,7 @@ public class ProfessorController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // DELETE: Remove um professor por ID
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProfessor(@PathVariable Long id) {
         professorService.delete(id);
