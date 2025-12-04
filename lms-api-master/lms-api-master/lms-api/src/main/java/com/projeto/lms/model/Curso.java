@@ -26,7 +26,7 @@ public class Curso {
     @OneToMany(mappedBy = "curso", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Modulo> modulos = new ArrayList<>();
 
-    // Getters manuais para resolver 'cannot find symbol method get...'
+    
     public Long getId() {
         return id;
     }
