@@ -1,7 +1,6 @@
 package com.projeto.lms.model;
 
 import jakarta.persistence.*;
-// import lombok.Data; // Removido ou comentado
 import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
@@ -29,7 +28,7 @@ public class Certificado {
         this.hashValidacao = hashValidacao;
     }
 
-    // Getters manuais para resolver 'cannot find symbol method get...'
+   
     public MatriculaId getId() {
         return id;
     }
@@ -38,7 +37,7 @@ public class Certificado {
         return matricula;
     }
 
-    // Setters (essenciais para JPA)
+    
     public void setId(MatriculaId id) { this.id = id; }
     public void setMatricula(Matricula matricula) { this.matricula = matricula; }
     public void setDataEmissao(LocalDate dataEmissao) { this.dataEmissao = dataEmissao; }
