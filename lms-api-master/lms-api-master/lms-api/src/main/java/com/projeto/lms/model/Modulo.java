@@ -20,7 +20,6 @@ public class Modulo {
     private String titulo;
     private Integer ordem;
 
-    // Relacionamento Muitos-para-Um (N:1) com Curso
     @ManyToOne
     @JoinColumn(name = "curso_id", nullable = false)
     private Curso curso;
