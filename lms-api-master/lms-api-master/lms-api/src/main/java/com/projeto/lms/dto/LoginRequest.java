@@ -1,10 +1,7 @@
 package com.projeto.lms.dto;
 import lombok.Data;
 
-/**
- * DTO para receber as credenciais de login.
- * Usa Lombok para getters, setters e construtores.
- */
+
 
 public class LoginRequest {
 
