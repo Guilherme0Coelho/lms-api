@@ -7,8 +7,6 @@ import java.util.Optional;
 
 @Repository
 public interface ProfessorRepository extends JpaRepository<Professor, Long> {
-    // CRUD básico (save, findById, findAll, delete) já está disponível.
 
-    // Método para o Spring Security carregar o Professor pelo Email
     Optional<Professor> findByEmail(String email);
 }
