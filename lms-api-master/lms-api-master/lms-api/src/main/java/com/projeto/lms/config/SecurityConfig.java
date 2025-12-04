@@ -25,10 +25,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // 1. Desabilita CSRF (Necessário para APIs REST e H2 Console)
+                // 1. Desabilita CSRF 
                 .csrf(csrf -> csrf.disable())
 
-                // 2. Permite que o H2 Console seja renderizado em um frame (Essencial para o H2)
+                // 2. Permite que o H2 Console seja renderizado em um frame 
                 .headers(headers -> headers.frameOptions(frame -> frame.disable()))
 
                 .authorizeHttpRequests(auth -> auth
@@ -36,7 +36,7 @@ public class SecurityConfig {
                         // 3. Permite o acesso SEM AUTENTICAÇÃO ao H2 Console
                         .requestMatchers("/h2-console/**").permitAll()
 
-                        // *** LINHA ADICIONADA: Permite o acesso ao endpoint de login POST ***
+                        // Permite o acesso ao endpoint de login POST ***
                         .requestMatchers(HttpMethod.POST, "/auth/login").permitAll()
 
                         // === Regras de Acesso ===
@@ -69,13 +69,13 @@ public class SecurityConfig {
     }
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-        // Isso usa a configuração interna (que inclui seu HybridUserDetailsService)
+        // Isso usa a configuração interna
         return config.getAuthenticationManager();
     }
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        // Usa BCrypt para criptografar senhas (altamente recomendado)
+        
         return new BCryptPasswordEncoder();
     }
 }
