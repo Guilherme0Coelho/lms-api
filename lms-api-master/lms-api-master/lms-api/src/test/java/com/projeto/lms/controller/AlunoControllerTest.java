@@ -22,8 +22,8 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-// @WebMvcTest sobe apenas o contexto web (Controller), não sobe o banco de dados. Muito rápido.
-// addFilters = false DESLIGA o Spring Security para o teste (evita erro 403/401 chato agora)
+// @WebMvcTest sobe apenas o contexto web (Controller), não sobe o banco de dados
+// addFilters = false DESLIGA o Spring Security para o teste 
 @WebMvcTest(controllers = AlunoController.class, properties = "spring.autoconfigure.exclude=org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration")
 class AlunoControllerTest {
 
@@ -31,7 +31,7 @@ class AlunoControllerTest {
     private MockMvc mockMvc; // Simula as chamadas HTTP
 
     @MockBean
-    private AlunoService alunoService; // Finge ser o Service (Mock)
+    private AlunoService alunoService; // Finge ser o Service 
 
     @Autowired
     private ObjectMapper objectMapper; // Transforma Objeto Java em JSON e vice-versa
@@ -47,14 +47,13 @@ class AlunoControllerTest {
         aluno2.setId(2L);
         aluno2.setNome("Maria");
 
-        // Quando o controller chamar o service.findAll(), retorne essa lista
         when(alunoService.findAll()).thenReturn(Arrays.asList(aluno1, aluno2));
 
         // 2. Ação e 3. Verificação (Act & Assert)
         mockMvc.perform(get("/api/alunos")
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk()) // Espera 200 OK
-                .andExpect(jsonPath("$.size()").value(2)) // Espera 2 itens na lista
+                .andExpect(status().isOk()) 
+                .andExpect(jsonPath("$.size()").value(2)) 
                 .andExpect(jsonPath("$[0].nome").value("João"));
     }
 
@@ -81,7 +80,7 @@ class AlunoControllerTest {
         when(alunoService.findById(id)).thenReturn(Optional.empty());
 
         mockMvc.perform(get("/api/alunos/{id}", id))
-                .andExpect(status().isNotFound()); // Espera 404
+                .andExpect(status().isNotFound()); 
     }
 
     @Test
@@ -93,12 +92,11 @@ class AlunoControllerTest {
         alunoSalvo.setId(10L);
         alunoSalvo.setNome("Novo Aluno");
 
-        // Quando pedir para salvar qualquer coisa, retorne o aluno salvo com ID
         when(alunoService.save(any(Aluno.class))).thenReturn(alunoSalvo);
 
         mockMvc.perform(post("/api/alunos")
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(alunoParaSalvar))) // Converte objeto p/ JSON
+                        .content(objectMapper.writeValueAsString(alunoParaSalvar))) 
                 .andExpect(status().isCreated()) // Espera 201 Created
                 .andExpect(jsonPath("$.id").value(10L));
     }
@@ -110,6 +108,6 @@ class AlunoControllerTest {
         doNothing().when(alunoService).delete(id);
 
         mockMvc.perform(delete("/api/alunos/{id}", id))
-                .andExpect(status().isNoContent()); // Espera 204 No Content
+                .andExpect(status().isNoContent()); 
     }
 }
