@@ -2,11 +2,11 @@ package com.projeto.lms.integration;
 
 import com.projeto.lms.model.Aluno;
 import com.projeto.lms.model.Curso;
-import com.projeto.lms.model.Professor; // <--- Importante
+import com.projeto.lms.model.Professor; 
 import com.projeto.lms.repository.AlunoRepository;
 import com.projeto.lms.repository.CursoRepository;
 import com.projeto.lms.repository.MatriculaRepository;
-import com.projeto.lms.repository.ProfessorRepository; // <--- Importante
+import com.projeto.lms.repository.ProfessorRepository; 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
