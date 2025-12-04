@@ -28,7 +28,7 @@ class MatriculaIntegrationTest {
     @Autowired private AlunoRepository alunoRepository;
     @Autowired private CursoRepository cursoRepository;
     @Autowired private MatriculaRepository matriculaRepository;
-    @Autowired private ProfessorRepository professorRepository; // <--- Precisamos salvar um professor antes
+    @Autowired private ProfessorRepository professorRepository; 
 
     @BeforeEach
     void setup() {
@@ -40,9 +40,7 @@ class MatriculaIntegrationTest {
 
     @Test
     void deveRealizarMatriculaDeVerdade() throws Exception {
-        // --- 1. PREPARAÇÃO (Arrange) ---
-
-        // A) Criar e Salvar ALUNO
+        // criar e salvar aluno
         Aluno aluno = new Aluno();
         aluno.setNome("Guilherme");
         aluno.setCpf("11122233344");
@@ -50,7 +48,7 @@ class MatriculaIntegrationTest {
         aluno.setRoles("ROLE_ALUNO");
         aluno = alunoRepository.save(aluno);
 
-        // B) Criar e Salvar PROFESSOR (Obrigatório para ter Curso)
+        //  Criar e Salvar prof (Obrigatório para ter Curso)
         Professor professor = new Professor();
         // Se der erro de "cannot resolve method" aqui, verifique sua classe Professor
         // Estou assumindo que ela tem setNome e setEmail
@@ -58,25 +56,25 @@ class MatriculaIntegrationTest {
             professor.setNome("Mestre Yoda");
             professor.setEmail("yoda@jedi.com");
         } catch (Exception e) {
-            // Se sua classe Professor não tiver esses métodos, ajuste aqui conforme ela é
+            
         }
         professor = professorRepository.save(professor);
 
-        // C) Criar e Salvar CURSO
+        //  Criar e Salvar cursoo
         Curso curso = new Curso();
-        curso.setTitulo("Java Completo"); // <--- CORRIGIDO: Era setNome, agora é setTitulo
+        curso.setTitulo("Java Completo"); 
         curso.setCargaHoraria(40);
-        curso.setProfessor(professor);    // <--- CORRIGIDO: Associando o professor obrigatório
+        curso.setProfessor(professor);    
         curso = cursoRepository.save(curso);
 
-        // --- 2. AÇÃO (Act) ---
+        
         mockMvc.perform(post("/api/matriculas/realizar")
                         .param("alunoId", String.valueOf(aluno.getId()))
                         .param("cursoId", String.valueOf(curso.getId()))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
 
-        // --- 3. VALIDAÇÃO (Assert) ---
+        // validação
         long totalMatriculas = matriculaRepository.count();
         if (totalMatriculas != 1) {
             throw new RuntimeException("Erro: A matrícula não foi salva no banco H2!");
