@@ -8,7 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 
 @Repository
 public interface AulaRepository extends JpaRepository<Aula, Long> {
-    // [cite: 19] Operação de cálculo e agregação: Soma a duração de todas as aulas de um módulo.
+   
     @Query("SELECT SUM(a.duracaoMinutos) FROM Aula a WHERE a.modulo.id = :moduloId")
     Integer sumDuracaoByModuloId(@Param("moduloId") Long moduloId);
 }
