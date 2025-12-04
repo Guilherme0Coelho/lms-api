@@ -24,17 +24,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class ProfessorControllerTest {
 
     @Autowired
-    private MockMvc mockMvc; // Simula o navegador/Postman
+    private MockMvc mockMvc; //  navegador/Postman
 
     @MockBean
     private ProfessorService professorService; // Simula o Service
 
     @Autowired
-    private ObjectMapper objectMapper; // Para converter Objetos em JSON
+    private ObjectMapper objectMapper; // 
 
     @Test
     void deveCriarProfessorComSucesso() throws Exception {
-        // 1. Cenário
+        
         Professor professorEnviado = new Professor();
         professorEnviado.setNome("Mestre Yoda");
         professorEnviado.setEmail("yoda@jedi.com");
@@ -44,10 +44,10 @@ class ProfessorControllerTest {
         professorSalvo.setNome("Mestre Yoda");
         professorSalvo.setEmail("yoda@jedi.com");
 
-        // Simula o salvamento
+        
         when(professorService.save(any(Professor.class))).thenReturn(professorSalvo);
 
-        // 2. Ação e 3. Verificação
+        
         mockMvc.perform(post("/api/professores")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(professorEnviado)))
@@ -58,7 +58,7 @@ class ProfessorControllerTest {
 
     @Test
     void deveListarTodosProfessores() throws Exception {
-        // 1. Cenário
+        
         Professor p1 = new Professor();
         p1.setId(1L);
         p1.setNome("Professor Xavier");
@@ -69,7 +69,7 @@ class ProfessorControllerTest {
 
         when(professorService.findAll()).thenReturn(Arrays.asList(p1, p2));
 
-        // 2. Ação e 3. Verificação
+       
         mockMvc.perform(get("/api/professores"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.size()").value(2))
@@ -78,7 +78,7 @@ class ProfessorControllerTest {
 
     @Test
     void deveBuscarProfessorPorIdComSucesso() throws Exception {
-        // 1. Cenário
+        
         Long id = 1L;
         Professor p1 = new Professor();
         p1.setId(id);
@@ -86,7 +86,7 @@ class ProfessorControllerTest {
 
         when(professorService.findById(id)).thenReturn(Optional.of(p1));
 
-        // 2. Ação e 3. Verificação
+        
         mockMvc.perform(get("/api/professores/{id}", id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id))
@@ -95,22 +95,22 @@ class ProfessorControllerTest {
 
     @Test
     void deveRetornar404QuandoProfessorNaoExiste() throws Exception {
-        // 1. Cenário
+        
         Long id = 99L;
         when(professorService.findById(id)).thenReturn(Optional.empty());
 
-        // 2. Ação e 3. Verificação
+        
         mockMvc.perform(get("/api/professores/{id}", id))
                 .andExpect(status().isNotFound());
     }
 
     @Test
     void deveDeletarProfessor() throws Exception {
-        // 1. Cenário
+        
         Long id = 1L;
         doNothing().when(professorService).delete(id);
 
-        // 2. Ação e 3. Verificação
+        
         mockMvc.perform(delete("/api/professores/{id}", id))
                 .andExpect(status().isNoContent()); // Espera 204
     }
