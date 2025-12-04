@@ -1,7 +1,7 @@
 package com.projeto.lms.model;
 
 import jakarta.persistence.*;
-// import lombok.Data; // Removido ou comentado
+
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import java.util.List;
@@ -39,7 +39,7 @@ public class Curso {
         return titulo;
     }
 
-    // Setters (mínimos para JPA)
+    
     public void setId(Long id) { this.id = id; }
     public void setModulos(List<Modulo> modulos) { this.modulos = modulos; }
     public void setProfessor(Professor professor) { this.professor = professor; }
